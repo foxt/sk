@@ -1,4 +1,14 @@
+# OS: macOS
 .DS_Store
+*.icloud
+
+# IDE: VS Code
 .vscode
+
+# IDE: Xcode
+xcuserdata
+
+# Toolchain: .NET
 bin
 obj
+
