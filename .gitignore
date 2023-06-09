@@ -5,10 +5,16 @@
 # IDE: VS Code
 .vscode
 
+# IDE: Visual Studio
+.vs
+
 # IDE: Xcode
 xcuserdata
+
 
 # Toolchain: .NET
 bin
 obj
 
+# Toolchain: Swift
+build

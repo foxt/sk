@@ -30,8 +30,7 @@
     <UseSGen>true</UseSGen>
     <UseRefCounting>true</UseRefCounting>
     <HttpClientHandler></HttpClientHandler>
-    <LinkMode>None</LinkMode>
-    <XamMacArch></XamMacArch>
+    <LinkMode>None</LinkMode>    <XamMacArch>x86_64,ARM64</XamMacArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,7 +48,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <LinkMode>SdkOnly</LinkMode>
     <HttpClientHandler></HttpClientHandler>
-    <XamMacArch></XamMacArch>
+    <XamMacArch>x86_64,ARM64</XamMacArch>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -96,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sk.Core\sk.Core.csproj">
-      <Project>{3925D80F-5D26-4809-B89B-A6FB07A22980}</Project>
+      <Project>{84CBE2BD-3178-4F68-AE9F-0A63451D880E}</Project>
       <Name>sk.Core</Name>
     </ProjectReference>
     <PackageReference Include="Legacy2CPSWorkaround" Version="1.0.0">

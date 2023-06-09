@@ -10,12 +10,30 @@ namespace sk.UI.Mac
 
 		[Export("webView:decidePolicyForNavigationAction:decisionHandler:")]
 		public override void DecidePolicy(WKWebView webView, WKNavigationAction navigationAction, Action<WKNavigationActionPolicy> decisionHandler) {
-			Console.WriteLine(navigationAction.Request.Url);
-			decisionHandler(WKNavigationActionPolicy.Allow);
+			var url = navigationAction.Request.Url;
+			Console.WriteLine("DecidePolicy: " + url.Host + " - " + url.Path);
+			if (url.Host == "foxt.dev" && url.Path == "/sk/auth") {
+				var token = url.Query.Replace("token=", "");
+				Console.WriteLine("URL auth ");
+
+				// TODO: parse this properly
+				OnAuthResult.Invoke(this, token);
+				//decisionHandler(WKNavigationActionPolicy.Cancel);
+			} else if (
+				(url.Host == "www.last.fm" && url.Path == "/api/auth") ||
+				(url.Host == "www.last.fm" && url.Path == "/login")) {
+
+				Console.WriteLine("URL allowed");
+				decisionHandler(WKNavigationActionPolicy.Allow);
+			} else {
+				Console.WriteLine("URL not allowed");
+				decisionHandler(WKNavigationActionPolicy.Cancel);
+			}
+			
 		}
 	}
 	class AuthWebView : NSWindow {
-		AuthWebViewDelegate delagate = new AuthWebViewDelegate();
+		public AuthWebViewDelegate delagate = new AuthWebViewDelegate();
 		public WKWebView webview;
 
 		public AuthWebView(IntPtr hwnd) : base(hwnd) { }
@@ -47,11 +65,15 @@ namespace sk.UI.Mac
 			CGRect contentRect = new CGRect(0, 0, 1000, 750);
 			var win = new AuthWebView(contentRect, (NSWindowStyle.Titled | NSWindowStyle.Closable | NSWindowStyle.Utility | NSWindowStyle.Resizable), NSBackingStore.Buffered, false);
 			win.webview.LoadRequest(new NSUrlRequest(new Uri(args.Url)));
+			win.delagate.OnAuthResult += (object sender, string e) => {
+				win.Close();
+				args.Callback(e);
+			};
 
 			base.Window = win;
 			
 			// Simulate Awaking from Nib
-			Window.AwakeFromNib();
+			win.AwakeFromNib();
 		}
 
 		public override void AwakeFromNib() {

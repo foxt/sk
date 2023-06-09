@@ -15,7 +15,7 @@ namespace sk.UI.Mac
 		public override void DidFinishLaunching (NSNotification notification)
 		{
 			var lfm = new SkLastFMScrobbler();
-			lfm.scrobbler.OnNowPlaying += Scrobbler_OnNowPlaying;
+			var ui = new UI(lfm);
 
 			lfm.api.OnAuthRequired += Api_OnAuthRequired;
 			lfm.api.EnsureAuthenticated(true);
