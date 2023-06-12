@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1705.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk.Core", ".\sk.Core\sk.Core.csproj", "{84CBE2BD-3178-4F68-AE9F-0A63451D880E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk.Core", "sk.Core\sk.Core.csproj", "{84CBE2BD-3178-4F68-AE9F-0A63451D880E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk.UI.Mac", ".\sk.UI.Mac\sk.UI.Mac.csproj", "{0B8CA004-C932-44D1-A332-F40D254F1A42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk.UI.Mac", "sk.UI.Mac\sk.UI.Mac.csproj", "{6FD839FA-8DB2-4F98-9C6D-EFFC03B8E7C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +21,10 @@ Global
 		{0B8CA004-C932-44D1-A332-F40D254F1A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B8CA004-C932-44D1-A332-F40D254F1A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B8CA004-C932-44D1-A332-F40D254F1A42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FD839FA-8DB2-4F98-9C6D-EFFC03B8E7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD839FA-8DB2-4F98-9C6D-EFFC03B8E7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD839FA-8DB2-4F98-9C6D-EFFC03B8E7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD839FA-8DB2-4F98-9C6D-EFFC03B8E7C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

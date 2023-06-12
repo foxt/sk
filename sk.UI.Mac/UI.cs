@@ -14,22 +14,23 @@ namespace sk.UI.Mac
 		NSStatusBar statusBar = NSStatusBar.SystemStatusBar;
 		NSStatusItem sbIcon;
 		SkLastFMScrobbler scrobbler;
-		Timer updateTimer = new Timer(1000);
+        NSTimer updateTimer;
 
-		NSMenuItem trackTitle = new NSMenuItem("🎵 ") { Enabled = false, Hidden = true };
+
+        NSMenuItem trackTitle = new NSMenuItem("🎵 ") { Enabled = false, Hidden = true };
         NSMenuItem trackArtist = new NSMenuItem("🎤 ") { Enabled = false, Hidden = true };
         NSMenuItem trackAlbum = new NSMenuItem("💿 ") { Enabled = false, Hidden = true };
         NSMenuItem scrobbleTime = new NSMenuItem("⏯️ Play some music to get started!") { Enabled = false, Hidden = false };
-
         NSMenuItem quitItem = new NSMenuItem("❌ Quit");
+
         int timeTillScrobble = 0;
         public UI(SkLastFMScrobbler scrobbler)
 		{
 			this.scrobbler = scrobbler;
 			sbIcon = statusBar.CreateStatusItem(NSStatusItemLength.Variable);
-			sbIcon.Image = NSImage.ImageNamed("AppIcon-16.png");
-			sbIcon.HighlightMode = true;
-			var m = sbIcon.Menu = new NSMenu("sk");
+			sbIcon.Button.Image = NSImage.ImageNamed("AppIcon-16.png");
+            sbIcon.HighlightMode = true;
+            var m = sbIcon.Menu = new NSMenu("sk");
 			sbIcon.Menu.Delegate = this;
 
 			m.AddItem(trackTitle);
@@ -39,20 +40,15 @@ namespace sk.UI.Mac
 			m.AddItem(NSMenuItem.SeparatorItem);
 
             m.AddItem(quitItem);
-			quitItem.Activated += (object s, EventArgs e) => { NSApplication.SharedApplication.Terminate(this); };
+			quitItem.Activated += (_,_) => { NSApplication.SharedApplication.Terminate(this); };
 
-            scrobbler.scrobbler.OnNowPlaying += (sender, e) => {
+            scrobbler.scrobbler.OnNowPlaying += (_, e) => {
                 timeTillScrobble = scrobbler.scrobbler.GetTimeUntilScrobble();
                 this.track = e.Track;
-                UpdateTrackName();
             };
-            scrobbler.scrobbler.player.OnPlayerPositionChanged += (sender, e) => {
+            scrobbler.scrobbler.player.OnPlayerPositionChanged += (_,_) => {
                 timeTillScrobble = scrobbler.scrobbler.GetTimeUntilScrobble();
-                UpdateTime();
             };
-            scrobbler.scrobbler.player.OnStateChanged += (sender, e) => UpdateTrackName();
-            scrobbler.scrobbler.OnScrobble += (sender, e) => UpdateTime();
-            this.updateTimer.Elapsed += (sender, e) => UpdateTime();
         }
 
         public void UpdateTrackName() {
@@ -69,20 +65,17 @@ namespace sk.UI.Mac
             }
 
 
-            this.trackTitle.Title = this.track.Title;
+            this.trackTitle.Title = "🎵 " + this.track.Title;
             this.trackTitle.Hidden = false;
-            this.trackAlbum.Title = this.track.Album;
+            this.trackAlbum.Title = "💿 " + this.track.Album;
             this.trackAlbum.Hidden = false;
-            this.trackArtist.Title = this.track.Artist;
+            this.trackArtist.Title = "🎤 " + this.track.Artist;
             this.trackArtist.Hidden = false;
 
             this.UpdateTime();
         }
 
 		public void UpdateTime() {
-            
-
-
             if (this.scrobbler.scrobbler.HasScrobbled) {
                 this.scrobbleTime.Title = "🔁 Scrobbled!";
             } else if (this.scrobbler.scrobbler.player.State == PlayerState.Playing) {
@@ -99,11 +92,13 @@ namespace sk.UI.Mac
 
         public override void MenuDidClose(NSMenu menu)
         {
-            updateTimer.Stop();
+            updateTimer.Invalidate();
         }
         public override void MenuWillOpen(NSMenu menu)
         {
-            updateTimer.Start();
+            UpdateTrackName();
+            updateTimer = NSTimer.CreateRepeatingScheduledTimer(1, (NSTimer timer) => UpdateTrackName());
+            NSRunLoop.Current.AddTimer(updateTimer, NSRunLoopMode.Common);
         }
 
         public override void MenuWillHighlightItem(NSMenu menu, NSMenuItem item) {}

@@ -63,11 +63,12 @@ namespace sk.UI.Mac
 		public AuthWebViewController(OnAuthRequiredArgs args) : base("AuthWebView") {
 			// Construct the window from code here
 			CGRect contentRect = new CGRect(0, 0, 1000, 750);
-			var win = new AuthWebView(contentRect, (NSWindowStyle.Titled | NSWindowStyle.Closable | NSWindowStyle.Utility | NSWindowStyle.Resizable), NSBackingStore.Buffered, false);
+			var win = new AuthWebView(contentRect, (NSWindowStyle.Titled | NSWindowStyle.Resizable), NSBackingStore.Buffered, false);
+
 			win.webview.LoadRequest(new NSUrlRequest(new Uri(args.Url)));
-			win.delagate.OnAuthResult += (object sender, string e) => {
+			win.delagate.OnAuthResult += (_, authToken) => {
+				args.Callback!(authToken);
 				win.Close();
-				args.Callback(e);
 			};
 
 			base.Window = win;
