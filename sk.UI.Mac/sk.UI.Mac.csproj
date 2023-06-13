@@ -5,11 +5,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
+    <RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <CreatePackage>false</CreatePackage>
     <UseSGen>false</UseSGen>
     <LinkMode>None</LinkMode>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <CreatePackage>false</CreatePackage>
@@ -24,6 +26,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sk.Core\sk.Core.csproj" />
+    <ProjectReference Include="..\sk.Players.Generic\sk.Players.Generic.csproj" />
+    <ProjectReference Include="..\sk.Core.MacBindingLibrary\sk.Players.Mac.AppleMusic.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Remove="Resources\AppleMusicPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Condition="'$(_ResourcePrefix)' != ''" Update="Resources\AppIcon-16%402x.png">

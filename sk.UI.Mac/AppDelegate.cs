@@ -2,7 +2,7 @@
 using WebKit;
 using Foundation;
 using CoreGraphics;
-
+using sk.Players.Generic;
 namespace sk.UI.Mac
 {
 	[Register ("AppDelegate")]
@@ -14,7 +14,9 @@ namespace sk.UI.Mac
 
 		public override void DidFinishLaunching (NSNotification notification)
 		{
-			var lfm = new SkLastFMScrobbler();
+			var player = new sk.Players.Mac.AppleMusic.SkMacAppleMusicPlayer();
+			var sk = new SkScrobblerCore(player);
+			var lfm = new SkLastFMScrobbler(sk);
 			var ui = new UI(lfm);
 
 			lfm.api.OnAuthRequired += Api_OnAuthRequired;

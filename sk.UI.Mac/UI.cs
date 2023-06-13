@@ -3,6 +3,7 @@ using System.Timers;
 using AppKit;
 using Foundation;
 using WebKit;
+using sk.Players.Generic;
 
 namespace sk.UI.Mac
 {

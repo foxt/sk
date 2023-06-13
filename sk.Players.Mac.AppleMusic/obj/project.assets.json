@@ -1,0 +1,112 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0-macos10.14": {
+      "sk.Players.Generic/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/sk.Players.Generic.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/sk.Players.Generic.dll": {}
+        }
+      },
+      "sk.Players.Mac.AppleMusic.BindingLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/sk.Players.Mac.AppleMusic.BindingLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/sk.Players.Mac.AppleMusic.BindingLibrary.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "sk.Players.Generic/1.0.0": {
+      "type": "project",
+      "path": "../sk.Players.Generic/sk.Players.Generic.csproj",
+      "msbuildProject": "../sk.Players.Generic/sk.Players.Generic.csproj"
+    },
+    "sk.Players.Mac.AppleMusic.BindingLibrary/1.0.0": {
+      "type": "project",
+      "path": "../sk.Players.Mac.AppleMusic.BindingLibrary/sk.Players.Mac.AppleMusic.BindingLibrary.csproj",
+      "msbuildProject": "../sk.Players.Mac.AppleMusic.BindingLibrary/sk.Players.Mac.AppleMusic.BindingLibrary.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0-macos10.14": [
+      "sk.Players.Generic >= 1.0.0",
+      "sk.Players.Mac.AppleMusic.BindingLibrary >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/foxt/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/foxt/dev/sk/sk.Players.Mac.AppleMusic/sk.Players.Mac.AppleMusic.csproj",
+      "projectName": "sk.Players.Mac.AppleMusic",
+      "projectPath": "/Users/foxt/dev/sk/sk.Players.Mac.AppleMusic/sk.Players.Mac.AppleMusic.csproj",
+      "packagesPath": "/Users/foxt/.nuget/packages/",
+      "outputPath": "/Users/foxt/dev/sk/sk.Players.Mac.AppleMusic/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/foxt/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0-macos10.14"
+      ],
+      "sources": {
+        "/usr/local/share/dotnet/library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0-macos10.14": {
+          "targetAlias": "net7.0-macos10.14",
+          "projectReferences": {
+            "/Users/foxt/dev/sk/sk.Players.Generic/sk.Players.Generic.csproj": {
+              "projectPath": "/Users/foxt/dev/sk/sk.Players.Generic/sk.Players.Generic.csproj"
+            },
+            "/Users/foxt/dev/sk/sk.Players.Mac.AppleMusic.BindingLibrary/sk.Players.Mac.AppleMusic.BindingLibrary.csproj": {
+              "projectPath": "/Users/foxt/dev/sk/sk.Players.Mac.AppleMusic.BindingLibrary/sk.Players.Mac.AppleMusic.BindingLibrary.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0-macos10.14": {
+        "targetAlias": "net7.0-macos10.14",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.macOS": {
+            "privateAssets": "all"
+          },
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.302/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

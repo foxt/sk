@@ -12,13 +12,16 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Scrobbler\" />
+    <None Remove="LastFM\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scrobbler\" />
+    <Folder Include="LastFM\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\sk.Players.Generic\sk.Players.Generic.csproj" />
   </ItemGroup>
 </Project>
