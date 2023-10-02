@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using sk.Players.Generic;
+using sk.Core;
 
 namespace sk
 {
     public class SkLastFMScrobbler {
         public SkScrobblerCore scrobbler;
-        public LastFMAPI api = new LastFMAPI();
-        public SkLastFMScrobbler(SkScrobblerCore scrobbler) {
+        public LastFMAPI api;
+        public SkLastFMScrobbler(SkScrobblerCore scrobbler, BaseSecretStore secretStore) {
+            this.api = new LastFMAPI(secretStore);
+
             this.scrobbler = scrobbler;
             scrobbler.OnNowPlaying += OnNowPlaying;
             scrobbler.OnScrobble += OnScrobble;

@@ -5,7 +5,7 @@
 	<key>CFBundleName</key>
 	<string>sk</string>
 	<key>CFBundleIdentifier</key>
-	<string>dev.foxt.sk.ui.mac</string>
+	<string>dev.foxt.sk.mac</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -28,5 +28,7 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon.icns</string>
 </dict>
 </plist>

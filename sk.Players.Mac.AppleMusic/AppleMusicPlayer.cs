@@ -5,9 +5,23 @@ using ScriptingBridge;
 using sk.Players.Generic;
 using Timer = System.Timers.Timer;
 using static System.Net.Mime.MediaTypeNames;
+using System.Runtime.InteropServices;
+using ObjCRuntime;
 
 namespace sk.Players.Mac.AppleMusic {
     public class SkMacAppleMusicPlayer : SkPlayer {
+        [DllImport(Constants.ObjectiveCLibrary, EntryPoint = "objc_msgSend")]
+        static extern IntPtr objc_msgSend_uint(
+            IntPtr target,
+            IntPtr selector,
+            uint code
+        );
+        [DllImport(Constants.ObjectiveCLibrary, EntryPoint = "objc_msgSend")]
+        static extern IntPtr objc_msgSend(
+            IntPtr target,
+            IntPtr selector
+        );
+
         private NSDistributedNotificationCenter dnc = NSDistributedNotificationCenter.DefaultCenter;
         public SkMacAppleMusicPlayer() {
             this.Name = "Apple Music";
@@ -40,15 +54,34 @@ namespace sk.Players.Mac.AppleMusic {
 
         }
 
-        iTunesApplication app;
+        SBApplication app;
+        SBObject prop;
 
         private void PullElapsedTime(object? sender, ElapsedEventArgs e)
         {
             if (!this.isPlaying) return;
-            if (this.app == null) this.app = SBApplication.GetApplication<iTunesApplication>(this.isAppleMusic ? "com.apple.Music" : "com.apple.iTunes");
-            var playerPos = app.playerPosition;
-            Console.WriteLine(playerPos);
-            this.Position = (int)playerPos;
+            try {
+            
+                if (this.app == null)
+                    this.app = SBApplication.GetApplication<SBApplication>(this.isAppleMusic ? "com.apple.Music" : "com.apple.iTunes");
+                if (this.app == null) {
+                    Console.WriteLine("tried to pull app but is still null, assuming the app has been quat(??)");
+                    this.isPlaying = false;
+                    return;
+                }
+
+                if (this.prop == null) {
+                    this.prop = (SBObject)Runtime.GetNSObject(
+                        objc_msgSend_uint(app.Handle, new Selector("propertyWithCode:").Handle, 1884319603)
+                    )!;
+                }
+                this.Position = (int)(NSNumber)this.prop.Get;
+                Console.WriteLine(this.Position);
+            } catch(Exception err) {
+                Console.WriteLine(err.Message);
+                this.app = null;
+                this.prop = null;
+            }
         }
 
         private string lastId = "";

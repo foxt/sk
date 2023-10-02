@@ -1,4 +1,5 @@
-﻿using AppKit;
+﻿using System.Diagnostics;
+using AppKit;
 
 namespace sk.UI.Mac
 {
@@ -6,6 +7,7 @@ namespace sk.UI.Mac
 	{
 		static void Main (string [] args)
 		{
+			Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
 			NSApplication.Init ();
 			NSApplication.Main (args);
 		}

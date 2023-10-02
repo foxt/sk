@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using sk.Core;
 
 namespace sk {
 	public class LastFMAPI {
@@ -30,8 +31,11 @@ namespace sk {
 
 	
 		private HttpClient client = new HttpClient();
+		private BaseSecretStore secretStore;
 
-		public LastFMAPI() {
+		public LastFMAPI(BaseSecretStore secretstore) {
+			this.secretStore = secretstore;
+
 			var assembliesLoaded = "";
 			foreach (var assmb in AppDomain.CurrentDomain.GetAssemblies()) {
 				var name = assmb.GetName();
@@ -39,10 +43,21 @@ namespace sk {
 					continue;
 				assembliesLoaded += name.Name + "/" + name.Version + " ";
 			}
-			assembliesLoaded += "(https://www.last.fm/user/foxtay)";
+			assembliesLoaded += "(https://www.last.fm/user/unicodefox)";
 			
 			Console.WriteLine($"SK Core LFM API: identifying as \"{assembliesLoaded}\" ");
 					client.DefaultRequestHeaders.Add("User-Agent", assembliesLoaded);
+			Console.WriteLine($"SK Core Authent: Retrieving secret for {this.BaseURL}");
+			try {
+				var secret = secretStore.GetSecret(this.BaseURL);
+				if (secret == null)
+                    Console.WriteLine($"SK Core Authent: No secret");
+				else
+                    Console.WriteLine($"SK Core Authent: Got secret {secret.Substring(0, Math.Min(secret.Length,5))}...");
+                this.SessionKey = secret;
+			} catch(Exception e) {
+                Console.WriteLine($"SK Core Authent: " + e.ToString());
+            }
 		}
 
 		public async Task<bool> CheckAuthenticated(bool deep = false) {
@@ -59,7 +74,12 @@ namespace sk {
 				return false;
 			} else {
 				Console.WriteLine("hello " + userInfo.user.name);
-				return true;
+				try {
+					secretStore.SetSecret(this.BaseURL, this.SessionKey, userInfo.user.name.ToString());
+				}catch(Exception e) {
+					Console.WriteLine($"SK Core Authent: " + e.ToString());
+				}
+            return true;
 			}
 		}
 

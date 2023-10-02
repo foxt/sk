@@ -7,18 +7,22 @@ namespace sk.UI.Mac
 {
 	class AuthWebViewDelegate : WKNavigationDelegate {
 		public event EventHandler<string> OnAuthResult;
+		
 
 		[Export("webView:decidePolicyForNavigationAction:decisionHandler:")]
 		public override void DecidePolicy(WKWebView webView, WKNavigationAction navigationAction, Action<WKNavigationActionPolicy> decisionHandler) {
 			var url = navigationAction.Request.Url;
 			Console.WriteLine("DecidePolicy: " + url.Host + " - " + url.Path);
 			if (url.Host == "foxt.dev" && url.Path == "/sk/auth") {
+				// TODO: parse this properly
 				var token = url.Query.Replace("token=", "");
 				Console.WriteLine("URL auth ");
 
-				// TODO: parse this properly
 				OnAuthResult.Invoke(this, token);
-				//decisionHandler(WKNavigationActionPolicy.Cancel);
+
+                // Terminating app due to uncaught exception 'NSInternalInconsistencyException',
+				// 'Completion handler passed to -[sk_UI_Mac_AuthWebViewDelegate webView:decidePolicyForNavigationAction:decisionHandler:] was not called'
+                decisionHandler(WKNavigationActionPolicy.Cancel);
 			} else if (
 				(url.Host == "www.last.fm" && url.Path == "/api/auth") ||
 				(url.Host == "www.last.fm" && url.Path == "/login")) {

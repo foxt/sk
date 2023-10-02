@@ -7,15 +7,14 @@ using sk.Players.Generic;
 
 namespace sk.UI.Mac
 {
-    // this code is ✨ horrible ✨
     public class UI : NSMenuDelegate
 	{
-        PlayerTrack track;
+        PlayerTrack? track;
 
 		NSStatusBar statusBar = NSStatusBar.SystemStatusBar;
 		NSStatusItem sbIcon;
 		SkLastFMScrobbler scrobbler;
-        NSTimer updateTimer;
+        NSTimer? updateTimer;
 
 
         NSMenuItem trackTitle = new NSMenuItem("🎵 ") { Enabled = false, Hidden = true };
@@ -29,7 +28,8 @@ namespace sk.UI.Mac
 		{
 			this.scrobbler = scrobbler;
 			sbIcon = statusBar.CreateStatusItem(NSStatusItemLength.Variable);
-			sbIcon.Button.Image = NSImage.ImageNamed("AppIcon-16.png");
+			sbIcon.Button.Image = NSImage.ImageNamed("logo16@2x.png");
+            sbIcon.Button.Image.Template = true;
             sbIcon.HighlightMode = true;
             var m = sbIcon.Menu = new NSMenu("sk");
 			sbIcon.Menu.Delegate = this;
@@ -93,7 +93,7 @@ namespace sk.UI.Mac
 
         public override void MenuDidClose(NSMenu menu)
         {
-            updateTimer.Invalidate();
+            updateTimer?.Invalidate();
         }
         public override void MenuWillOpen(NSMenu menu)
         {

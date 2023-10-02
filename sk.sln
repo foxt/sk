@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{6F36EB1B-AB15-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk.Players.Generic", "sk.Players.Generic\sk.Players.Generic.csproj", "{B4ABC74C-E2BE-4652-B8F0-707DB41EE481}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk.Players.Mac.AppleMusic.BindingLibrary", "sk.Players.Mac.AppleMusic.BindingLibrary\sk.Players.Mac.AppleMusic.BindingLibrary.csproj", "{78829F08-909D-4812-A08F-B97935FA93B2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,10 +49,6 @@ Global
 		{EDE4606C-4391-4AC4-9B00-96B9E9A935EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDE4606C-4391-4AC4-9B00-96B9E9A935EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDE4606C-4391-4AC4-9B00-96B9E9A935EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78829F08-909D-4812-A08F-B97935FA93B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78829F08-909D-4812-A08F-B97935FA93B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78829F08-909D-4812-A08F-B97935FA93B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78829F08-909D-4812-A08F-B97935FA93B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +63,5 @@ Global
 		{6FD839FA-8DB2-4F98-9C6D-EFFC03B8E7C6} = {6F36EB1B-AB15-416B-AEC6-FB33A44A6A1F}
 		{B4ABC74C-E2BE-4652-B8F0-707DB41EE481} = {8BA469F1-9DC6-4827-8BA9-FC9D38B95421}
 		{EDE4606C-4391-4AC4-9B00-96B9E9A935EC} = {651E152D-C15A-4832-8F69-AF912B1EF732}
-		{78829F08-909D-4812-A08F-B97935FA93B2} = {651E152D-C15A-4832-8F69-AF912B1EF732}
 	EndGlobalSection
 EndGlobal
