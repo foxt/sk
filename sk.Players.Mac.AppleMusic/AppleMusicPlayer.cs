@@ -76,6 +76,8 @@ namespace sk.Players.Mac.AppleMusic {
                     )!;
                 }
                 this.Position = (int)(NSNumber)this.prop.Get;
+
+                
                 Console.WriteLine(this.Position);
             } catch(Exception err) {
                 Console.WriteLine(err.Message);
