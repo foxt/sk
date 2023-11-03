@@ -29,6 +29,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets.xcassets\.DS_Store" />
+    <None Remove="SecretStore\" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\.DS_Store" />
@@ -44,6 +45,9 @@
   <ItemGroup>
     <BundleResource Condition="'$(_ResourcePrefix)' != ''" Update="Resources\logo16%402x.png">
       <Link>Resources\logo16%402x.png</Link>
+    </BundleResource>
+    <BundleResource Condition="'$(_ResourcePrefix)' != ''" Update="Resources\AppIcon-16%402x.png">
+      <Link>Resources\AppIcon-16%402x.png</Link>
     </BundleResource>
   </ItemGroup>
   <ItemGroup>
@@ -68,5 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SecretStore\" />
   </ItemGroup>
 </Project>
