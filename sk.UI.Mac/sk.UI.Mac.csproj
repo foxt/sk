@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0-macos10.14</TargetFramework>
+    <TargetFramework>net8.0-macos</TargetFramework>
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
-    <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>10.15</SupportedOSPlatformVersion>
     <RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
-    <!--
+    <ApplicationId>dev.foxt.sk.mac</ApplicationId>
     <EnableCodeSigning>true</EnableCodeSigning>
     <CodeSignEntitlements>Entitlements.plist</CodeSignEntitlements>
     <CodeSigningKey>Developer ID Application</CodeSigningKey>
     <ProvisioningType>automatic</ProvisioningType>
-    <UseHardenedRuntime>true</UseHardenedRuntime>-->
+    <UseHardenedRuntime>true</UseHardenedRuntime>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <CreatePackage>false</CreatePackage>
