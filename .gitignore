@@ -19,3 +19,4 @@ obj
 # Toolchain: Swift
 build
 builds
+/.idea
