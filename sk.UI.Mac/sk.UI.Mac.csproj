@@ -18,6 +18,7 @@
     <CodeSignEntitlements>Entitlements.plist</CodeSignEntitlements>
     <CodeSigningKey>Developer ID Application</CodeSigningKey>
     <ProvisioningType>automatic</ProvisioningType>
+    <UseHardenedRuntime>true</UseHardenedRuntime>
     <TrimMode>full</TrimMode>
   </PropertyGroup>
   <ItemGroup>
