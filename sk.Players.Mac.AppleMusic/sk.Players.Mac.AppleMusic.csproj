@@ -1,18 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-macos</TargetFramework>
+    <TargetFramework>net9.0-macos</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <CreatePackage>false</CreatePackage>
-    <UseSGen>false</UseSGen>
-    <LinkMode>None</LinkMode>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <CreatePackage>false</CreatePackage>
-    <UseSGen>false</UseSGen>
-    <LinkMode>None</LinkMode>
+
+    <!--
+      Enable full trimming in Release mode.
+      To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/trimming-options#trimming-granularity
+    -->
+    <TrimMode Condition="'$(Configuration)' == 'Release'">full</TrimMode>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\sk.Players.Generic\sk.Players.Generic.csproj" />

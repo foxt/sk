@@ -5,75 +5,23 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <SupportedOSPlatformVersion>12.0</SupportedOSPlatformVersion>
-    <RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
+
+
+    <!--
+      Enable full trimming in Release mode.
+      To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/trimming-options#trimming-granularity
+    -->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <ApplicationId>dev.foxt.sk.mac</ApplicationId>
     <EnableCodeSigning>true</EnableCodeSigning>
     <CodeSignEntitlements>Entitlements.plist</CodeSignEntitlements>
     <CodeSigningKey>Developer ID Application</CodeSigningKey>
     <ProvisioningType>automatic</ProvisioningType>
-    <UseHardenedRuntime>true</UseHardenedRuntime>
+    <TrimMode>full</TrimMode>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <CreatePackage>false</CreatePackage>
-    <UseSGen>false</UseSGen>
-    <LinkMode>None</LinkMode>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <CreatePackage>false</CreatePackage>
-    <UseSGen>false</UseSGen>
-    <LinkMode>Full</LinkMode>
-    <SignAssembly>true</SignAssembly>
-    <DebugSymbols>true</DebugSymbols>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Assets.xcassets\.DS_Store" />
-    <None Remove="SecretStore\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\.DS_Store" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sk.Core\sk.Core.csproj" />
-    <ProjectReference Include="..\sk.Players.Generic\sk.Players.Generic.csproj" />
     <ProjectReference Include="..\sk.Players.Mac.AppleMusic\sk.Players.Mac.AppleMusic.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Remove="Resources\AppleMusicPlayer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Condition="'$(_ResourcePrefix)' != ''" Update="Resources\logo16%402x.png">
-      <Link>Resources\logo16%402x.png</Link>
-    </BundleResource>
-    <BundleResource Condition="'$(_ResourcePrefix)' != ''" Update="Resources\AppIcon-16%402x.png">
-      <Link>Resources\AppIcon-16%402x.png</Link>
-    </BundleResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-512%402x.png">
-      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-512%402x.png</Link>
-    </ImageAsset>
-    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-32%402x.png">
-      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-32%402x.png</Link>
-    </ImageAsset>
-    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-16%402x.png">
-      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-16%402x.png</Link>
-    </ImageAsset>
-    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-256%402x.png">
-      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-256%402x.png</Link>
-    </ImageAsset>
-    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-128%402x.png">
-      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-128%402x.png</Link>
-    </ImageAsset>
-    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-64%402x.png">
-      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-64%402x.png</Link>
-    </ImageAsset>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SecretStore\" />
   </ItemGroup>
 </Project>

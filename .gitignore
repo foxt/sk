@@ -8,6 +8,16 @@
 # IDE: Visual Studio
 .vs
 
+# IDE: Rider
+/.idea
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+*.user
+
+
+
+
 # IDE: Xcode
 xcuserdata
 
@@ -19,4 +29,4 @@ obj
 # Toolchain: Swift
 build
 builds
-/.idea
+

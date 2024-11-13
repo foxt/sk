@@ -7,6 +7,7 @@ using Timer = System.Timers.Timer;
 using static System.Net.Mime.MediaTypeNames;
 using System.Runtime.InteropServices;
 using ObjCRuntime;
+using Foundation;
 
 namespace sk.Players.Mac.AppleMusic {
     public class SkMacAppleMusicPlayer : SkPlayer {
