@@ -76,12 +76,16 @@ namespace sk.Players.Mac.AppleMusic {
                         objc_msgSend_uint(app.Handle, new Selector("propertyWithCode:").Handle, 1884319603)
                     )!;
                 }
-                this.Position = (int)(NSNumber)this.prop.Get;
+                //Debugger.Break();
+                Console.WriteLine(this.prop);
+                var value = this.prop.Get;
+
+                this.Position = (int)(NSNumber)value;
 
                 
                 Console.WriteLine(this.Position);
             } catch(Exception err) {
-                Console.WriteLine(err.Message);
+                Console.WriteLine("Couldn't PullElapsedTime!!! " + err.ToString());
                 this.app = null;
                 this.prop = null;
             }
