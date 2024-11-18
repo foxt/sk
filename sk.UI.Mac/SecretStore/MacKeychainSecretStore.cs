@@ -42,7 +42,7 @@ namespace sk.UI.Mac
 
             Console.WriteLine("Keychain Get: " + status);
             if (status == SecStatusCode.Success)
-                return data.ToString();
+                return data?.ToString();
             else if (status == SecStatusCode.ItemNotFound)
                 return null;
             else

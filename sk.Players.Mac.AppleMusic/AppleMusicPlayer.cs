@@ -24,39 +24,22 @@ namespace sk.Players.Mac.AppleMusic {
         );
 
         private NSDistributedNotificationCenter dnc = NSDistributedNotificationCenter.DefaultCenter;
+        
+        private Timer timer;
         public SkMacAppleMusicPlayer() {
             this.Name = "Apple Music";
-            startListener();
-
-        }
-        // We need to know which bundle ID to request data from (com.apple.iTunes or
-        // com.apple.Music).
-        // On older systems with iTunes, we recieve only the
-        // com.apple.iTunes.playerInfo event, and thus need to send AppleEvents to
-        // iTunes bundle ID.
-        // However, on newer systems, *both* com.apple.iTunes.playerInfo &
-        // com.apple.Music.playerInfo are recieved, but we should filter out the
-        // duplicate iTunes events, and note down that we should send events to the
-        // Music bundle ID (sending to iTunes bundle ID will fail on new systems).
-        // We can get away with having a boolean here, as we will only ever send events
-        // when isPlaying is true, meaning we have already recieved a Notification. The
-        // first notification will be duplicated as AM sends the legacy iTunes event
-        // first, but this isn't too big a deal.
-        bool isAppleMusic = false;
-        bool isPlaying = false;
-        private Timer timer;
-
-        private void startListener() {
+            
+            
             dnc.AddObserver(new NSString("com.apple.Music.playerInfo"), this.NotificationHandler);
             dnc.AddObserver(new NSString("com.apple.iTunes.playerInfo"), this.NotificationHandler);
             this.timer = new Timer(3000);
             timer.Elapsed += PullElapsedTime;
 
-
         }
+        
 
-        SBApplication app;
-        SBObject prop;
+        SBApplication? app;
+        SBObject? prop;
 
         private void PullElapsedTime(object? sender, ElapsedEventArgs e)
         {
@@ -92,32 +75,74 @@ namespace sk.Players.Mac.AppleMusic {
         }
 
         private string lastId = "";
+        
+        // We need to know which bundle ID to request data from (com.apple.iTunes or
+        // com.apple.Music).
+        // On older systems with iTunes, we receive only the
+        // com.apple.iTunes.playerInfo event, and thus need to send AppleEvents to
+        // iTunes bundle ID.
+        // However, on newer systems, *both* com.apple.iTunes.playerInfo &
+        // com.apple.Music.playerInfo are received, but we should filter out the
+        // duplicate iTunes events, and note down that we should send events to the
+        // Music bundle ID (sending to iTunes bundle ID will fail on new systems).
+        // We can get away with having a boolean here, as we will only ever send events
+        // when isPlaying is true, meaning we have already received a Notification. The
+        // first notification will be duplicated as AM sends the legacy iTunes event
+        // first, but this isn't too big a deal.
+        bool isAppleMusic = false;
+        bool isPlaying = false;
         private void NotificationHandler(NSNotification notif) {
-            if (notif.Name == "com.apple.Music.playerInfo") isAppleMusic = true;
-            else if (notif.Name == "com.apple.iTunes.playerInfo" && isAppleMusic) return;
-
-            var data = notif.UserInfo;
-            if (data == null)
-                return;
-            var state = data["Player State"].ToString();
-            this.isPlaying = (state == "Playing");
-            if (this.isPlaying)
-                this.timer.Start();
-            else
-                this.timer.Stop();
-
-            switch (state) {
-                case "Playing":
-                    this.State = PlayerState.Playing;
-                    break;
-                case "Paused":
-                    this.State = PlayerState.Paused;
-                    break;
-                default:
             try {
+                if (notif.Name == "com.apple.Music.playerInfo") isAppleMusic = true;
+                else if (notif.Name == "com.apple.iTunes.playerInfo" && isAppleMusic) return;
+
+                var data = notif.UserInfo;
+                if (data == null)
+                    return;
+
+                var state = data["Player State"].ToString();
+                this.isPlaying = (state == "Playing");
+                if (this.isPlaying)
+                    this.timer.Start();
+                else
+                    this.timer.Stop();
+
+                switch (state) {
+                    case "Playing":
+                        this.State = PlayerState.Playing;
+                        break;
+                    case "Paused":
+                        this.State = PlayerState.Paused;
+                        break;
+                    default:
+                        this.State = PlayerState.Stopped;
+                        break;
+                }
+
+                // If the media is loading we don't know the time. Time is required for
+                // scrobbling so we just skip this notification and hope we receive one
+                // when playback actually starts. We send the media stopped event in
+                // this case i.e. for radio
+                if (data["Total Time"] == null) {
                     this.State = PlayerState.Stopped;
-                    break;
-            }
+                    this.timer.Stop();
+                    this.isPlaying = false;
+                    return;
+                }
+
+                var id = data["Store URL"];
+                if (id == null)
+                    id = data["PersistentID"];
+
+                if (id == null)
+                    id = data["Location"];
+
+                if (id == null)
+                    id = data["Name"];
+
+                var idS = id.ToString();
+                if (idS == lastId)
+                    return;
 
                 lastId = idS;
                 this.Track = new PlayerTrack() {

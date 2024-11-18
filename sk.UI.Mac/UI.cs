@@ -28,9 +28,11 @@ namespace sk.UI.Mac
 		{
 			this.scrobbler = scrobbler;
 			sbIcon = statusBar.CreateStatusItem(NSStatusItemLength.Variable);
-			sbIcon.Button.Image = NSImage.ImageNamed("logo16@2x.png");
-            sbIcon.Button.Image.Template = true;
-            sbIcon.HighlightMode = true;
+            
+            var image = NSImage.ImageNamed("logo16@2x.png")!;
+            image.Template = true;
+			sbIcon.Button.Image = image;
+            
             var m = sbIcon.Menu = new NSMenu("sk");
 			sbIcon.Menu.Delegate = this;
 

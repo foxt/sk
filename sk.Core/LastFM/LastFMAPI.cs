@@ -15,7 +15,6 @@ namespace sk {
 		public string SharedSecret = "a1832fe0e3b4b14e7df5525e22ce0e64";
 		public Task? AuthHold;
 		public event EventHandler<OnAuthRequiredArgs>? OnAuthRequired;
-        public event EventHandler<OnAuthRequiredArgs>? OnAuthChanged;
 
         public string? _SessionKey;
 		public string? SessionKey {

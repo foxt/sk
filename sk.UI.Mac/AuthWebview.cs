@@ -6,7 +6,7 @@ using WebKit;
 namespace sk.UI.Mac
 {
 	class AuthWebViewDelegate : WKNavigationDelegate {
-		public event EventHandler<string> OnAuthResult;
+		public event EventHandler<string>? OnAuthResult;
 		
 
 		[Export("webView:decidePolicyForNavigationAction:decisionHandler:")]
@@ -15,10 +15,10 @@ namespace sk.UI.Mac
 			Console.WriteLine("DecidePolicy: " + url.Host + " - " + url.Path);
 			if (url.Host == "foxt.dev" && url.Path == "/sk/auth") {
 				// TODO: parse this properly
-				var token = url.Query.Replace("token=", "");
+				var token = url.Query?.Replace("token=", "") ?? "";
 				Console.WriteLine("URL auth ");
 
-				OnAuthResult.Invoke(this, token);
+				OnAuthResult?.Invoke(this, token);
 
                 // Terminating app due to uncaught exception 'NSInternalInconsistencyException',
 				// 'Completion handler passed to -[sk_UI_Mac_AuthWebViewDelegate webView:decidePolicyForNavigationAction:decisionHandler:] was not called'
@@ -38,8 +38,8 @@ namespace sk.UI.Mac
 	}
 	class AuthWebView : NSWindow {
 		public AuthWebViewDelegate delagate = new AuthWebViewDelegate();
-		public WKWebView webview;
-
+		public WKWebView? webview;
+		
 		public AuthWebView(IntPtr hwnd) : base(hwnd) { }
 		[Export("initWithCoder:")]
 		public AuthWebView(NSCoder coder) : base(coder) { }
@@ -69,7 +69,7 @@ namespace sk.UI.Mac
 			CGRect contentRect = new CGRect(0, 0, 1000, 750);
 			var win = new AuthWebView(contentRect, (NSWindowStyle.Titled | NSWindowStyle.Resizable), NSBackingStore.Buffered, false);
 
-			win.webview.LoadRequest(new NSUrlRequest(new Uri(args.Url)));
+			win.webview!.LoadRequest(new NSUrlRequest(new Uri(args.Url)!));
 			win.delagate.OnAuthResult += (_, authToken) => {
 				args.Callback!(authToken);
 				win.Close();

@@ -23,15 +23,10 @@ namespace sk.UI.Mac
 			lfm.api.EnsureAuthenticated(true);
 		}
 
-		private void Api_OnAuthRequired(object sender, OnAuthRequiredArgs e)
+		private void Api_OnAuthRequired(object? sender, OnAuthRequiredArgs e)
 		{
 			var controller = new AuthWebViewController(e);
 			controller.Window.MakeKeyAndOrderFront(controller);
-		}
-
-		private void Scrobbler_OnNowPlaying(object sender, OnNowPlayingArgs e)
-		{
-			throw new System.NotImplementedException();
 		}
 
 		public override void WillTerminate (NSNotification notification)
