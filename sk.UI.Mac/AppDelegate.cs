@@ -16,7 +16,7 @@ namespace sk.UI.Mac
 		{
 			var player = new sk.Players.Mac.AppleMusic.SkMacAppleMusicPlayer();
 			var sk = new SkScrobblerCore(player);
-			var lfm = new SkLastFMScrobbler(sk, new PreferencesSecretStore());
+			var lfm = new SkLastFMScrobbler(sk, new MacKeychainSecretStore());
 			var ui = new UI(lfm);
 
 			lfm.api.OnAuthRequired += Api_OnAuthRequired;
