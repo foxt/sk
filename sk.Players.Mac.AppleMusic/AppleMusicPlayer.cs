@@ -114,39 +114,24 @@ namespace sk.Players.Mac.AppleMusic {
                     this.State = PlayerState.Paused;
                     break;
                 default:
+            try {
                     this.State = PlayerState.Stopped;
                     break;
             }
 
-            // If the media is loading we don't know the time. Time is required for
-            // scrobbling so we just skip this notification and hope we recieve one
-            // when playback actually starts. We send the media stopped event in
-            // this case i.e. for radio
-            if (data["Total Time"] == null) {
-                this.State = PlayerState.Stopped;
-                this.timer.Stop();
-                this.isPlaying = false;
-                return;
+                lastId = idS;
+                this.Track = new PlayerTrack() {
+                    ID = idS,
+                    Title = data["Name"]?.ToString() ?? "Unknown Track",
+                    Artist = data["Artist"]?.ToString() ?? "Unknown Artist",
+                    Album = data["Album"]?.ToString() ?? "Unknown Album",
+                    AlbumArtist = (data["Album Artist"] ?? data["Artist"])?.ToString() ?? "Unknown Artist",
+                    Duration = ((NSNumber)data["Total Time"]).Int32Value / 1000
+                };
+
+            } catch (Exception err) {
+                Console.WriteLine("Error processing DNC event!!!  " + err.ToString());    
             }
-            var id = data["Store URL"];
-            if (id == null)
-                id = data["PersistentID"];
-            if (id == null)
-                id = data["Location"];
-            if (id == null)
-                id = data["Name"];
-            var idS = id.ToString();
-            if (idS == lastId)
-                return;
-            lastId = idS;
-            this.Track = new PlayerTrack() {
-                ID = idS,
-                Title = data["Name"].ToString(),
-                Artist = data["Artist"].ToString(),
-                Album = data["Album"].ToString(),
-                AlbumArtist = data["Album Artist"].ToString(),
-                Duration = ((NSNumber)data["Total Time"]).Int32Value / 1000
-            };
         }
     }
 }
